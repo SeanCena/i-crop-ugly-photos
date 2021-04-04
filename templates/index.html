@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+
+<html>
+
+    <head>
+        <title>ICUP</title>
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+
+        <!--Logo start-->
+        <div id="logo">
+            <!--ASCII supremacy-->
+            ██╗░█████╗░██╗░░░██╗██████╗░<br>
+            ██║██╔══██╗██║░░░██║██╔══██╗<br>
+            ██║██║░░╚═╝██║░░░██║██████╔╝<br>
+            ██║██║░░██╗██║░░░██║██╔═══╝░<br>
+            ██║╚█████╔╝╚██████╔╝██║░░░░░<br>
+            ╚═╝░╚════╝░░╚═════╝░╚═╝░░░░░<br>
+        </div>
+        <!--Logo end-->
+
+        <!--Status messages start-->
+        {% if status=="ok" %}
+            <div id="status-msg" class="mono ok">
+                <p>Success! The offender has been removed.</p>
+            </div>
+        {% elif status=="error" %}
+            <div id="status-msg" class="mono error">
+                <p>Error: the given filetype is not compatible with our system.</p>
+            </div>
+        {% endif %}
+        <!--Status messages end-->
+
+        <!--Content start-->
+        <div id="instr" class="mono">
+            Upload a person's face to erase them from your Facebook posts
+        </div>
+        <div id="upload" class="mono">
+            <!--
+            <fb:login-button scope="public_profile,user_photos" onlogin="checkLoginState();">
+            </fb:login-button>
+            -->
+            <form action="{{ url_for('api') }}" method="POST" enctype="multipart/form-data">
+                <table>
+                    <tr>
+                        <td>Face</td>
+                        <td>Image</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <input class="mono" type="file" name="face" value="face" accept=".jpg" />
+                        </td>
+                        <td>
+                            <input class="mono" type="file" name="pic" value="pic" accept=".jpg" />
+                        </td>
+                        <td>
+                            <input class="mono" type="submit" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <!--Content end-->
+        <!--Img start-->
+        {% if out_url %}
+            <img id="result_img" src="{{ url_for('static', filename='out.jpg') }}" />
+        {% endif %}
+        <!--Img end-->
+
+        <!--
+        Rest in peace facebook integration
+        <script src="{{ url_for('static', filename='fb-login.js') }}"></script>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+        -->
+    </body>
+</html>
